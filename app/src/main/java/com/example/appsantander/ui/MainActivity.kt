@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.appsantander.R
@@ -24,7 +25,12 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.buscarContaCliente().observe(this, Observer { result ->
             Log.d("Agencia ->", result.agencia)
 
-
+        findViewById<TextView>(R.id.tv_agencia).text = result.agencia
+            findViewById<TextView>(R.id.tv_conta_corrente).text = result.numero
+            findViewById<TextView>(R.id.tv_saldo).text = result.saldo
+            findViewById<TextView>(R.id.tv_valor_saldo_limite).text = result.limite
+            findViewById<TextView>(R.id.tv_usuario).text = result.cliente.nome
+            findViewById<TextView>(R.id.tv_cartao_final_value).text = result.cartao.numeroCartao
         })
     }
 
