@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.appsantander.R
+import com.example.appsantander.data.Conta
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,16 +23,24 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
+    }
+    private fun buscarContaCliente()
+    {
         mainViewModel.buscarContaCliente().observe(this, Observer { result ->
             Log.d("Agencia ->", result.agencia)
 
-        findViewById<TextView>(R.id.tv_agencia).text = result.agencia
-            findViewById<TextView>(R.id.tv_conta_corrente).text = result.numero
-            findViewById<TextView>(R.id.tv_saldo).text = result.saldo
-            findViewById<TextView>(R.id.tv_valor_saldo_limite).text = result.limite
-            findViewById<TextView>(R.id.tv_usuario).text = result.cliente.nome
-            findViewById<TextView>(R.id.tv_cartao_final_value).text = result.cartao.numeroCartao
         })
+    }
+
+    private fun bindOnView(conta: Conta) {
+        findViewById<TextView>(R.id.tv_agencia).text = conta.agencia
+        findViewById<TextView>(R.id.tv_conta_corrente).text = conta.numero
+        findViewById<TextView>(R.id.tv_saldo).text = conta.saldo
+        findViewById<TextView>(R.id.tv_valor_saldo_limite).text = conta.limite
+        findViewById<TextView>(R.id.tv_usuario).text = conta.cliente.nome
+        findViewById<TextView>(R.id.tv_cartao_final_value).text = conta.cartao.numeroCartao
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -43,11 +52,12 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
 
-        return when (item.itemId){
+        return when (item.itemId) {
             R.id.item_1 -> {
                 Log.d("CLICK", "Click no item 1")
                 true
-            } else -> super.onOptionsItemSelected(item)
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }
